@@ -49,10 +49,6 @@
 </main>
 
 <script>
-  // "textbelt" es la clave gratuita pública (1 SMS por día).
-  // Si compras una clave propia en textbelt.com, reemplázala aquí.
-  const CLAVE = "textbelt";
-
   const numero = document.getElementById("numero");
   const mensaje = document.getElementById("mensaje");
   const contador = document.getElementById("n");
@@ -83,7 +79,8 @@
     mostrar("Enviando…");
 
     try {
-      const resp = await fetch("https://sms-proxy.tuusuario.workers.dev", {
+      // URL real de tu Cloudflare Worker
+      const resp = await fetch("https://sms-proxy.ignaciocalderon-1805.workers.dev/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone: tel, message: texto })
@@ -95,7 +92,7 @@
         mensaje.value = "";
         contador.textContent = "0";
       } else {
-        mostrar("No se pudo enviar: " + (datos.error || "error desconocido"), "err");
+        mostrar("No se pudo enviar: " + (datos.quotaRemaining === 0 ? "Límite gratuito alcanzado por hoy." : (datos.error || "error desconocido")), "err");
       }
     } catch (e) {
       mostrar("Error de conexión. Revisa tu internet e inténtalo de nuevo.", "err");
