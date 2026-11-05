@@ -83,10 +83,10 @@
     mostrar("Enviando…");
 
     try {
-      const resp = await fetch("https://textbelt.com/text", {
+      const resp = await fetch("https://sms-proxy.tuusuario.workers.dev", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ phone: tel, message: texto, key: CLAVE })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: tel, message: texto })
       });
       const datos = await resp.json();
 
